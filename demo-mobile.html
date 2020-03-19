@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="mobile" id="iphone">
+    <div class="title-name" id="iphone-name">Mobile1</div>
+    <div class="inbox" id="iphone-inbox">inbox</div>
+    <div class="outbox" id="iphone-outbox">outbox</div>
+    <input class="msg" id="iphone-msg" oninput="mobile1.writeMsg(this.value)">
+    <button class="send" onclick="sendMsg(mobile1,mobile2)">Send</button>
+</div>
+
+<div class="mobile" id="SamSung">
+    <div class="title-name" id="SamSung-name">Mobile2</div>
+    <div class="inbox" id="SamSung-inbox">inbox</div>
+    <div class="outbox" id="SamSung-outbox">outbox</div>
+    <input class="msg" id="SamSung-msg" oninput="mobile2.writeMsg(this.value)">
+    <button class="send" onclick="sendMsg(mobile1,mobile2)">Send</button>
+</div>
+
+<script>
+    class Mobile{
+        constructor() {
+            this.name = name;
+            this.battery = 100;
+            this.msg = "";
+            this.inbox = [];
+            this.outbox = [];
+        }
+        writeMsg(value){
+            this.msg = value;
+        }
+        receiveMsg(msg){
+            this.inbox.push(msg);
+        }
+        sendMsg(mobile){
+            mobile.receiveMsg(this.msg);
+            this.outbox.push(this.msg);
+        }
+    }
+    let mobile1 = new Mobile("iphone");
+    let mobile2 = new Mobile("SamSung");
+    mobile1.writeMsg("Hello");
+    mobile1.sendMsg(mobile2);
+    
+    console.log(mobile1);
+    console.log(mobile2);
+
+    function sendMsg(m1,m2) {
+        m1.sendMsg(m2);
+        document.getElementById("iphone-inbox").innerHTML = mobile1.inbox;
+        document.getElementById("iphone-outbox").innerHTML = mobile1.inbox;
+        document.getElementById("SamSung-inbox").innerHTML = mobile2.outbox;
+        document.getElementById("SamSung-outbox").innerHTML = mobile2.outbox;
+
+    }
+</script>
+</body>
+</html>
